@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_story/auth/auth_service.dart';
+import 'package:travel_story/pages/main_page.dart';
 import 'package:travel_story/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,7 +35,24 @@ class _LoginPageState extends State<LoginPage> {
 
     // attempt login...
     try {
-      await authService.signInWithEmailPassword(email, password);
+      final response = await authService.signInWithEmailPassword(email, password);
+      if (response.session != null) {
+        print("Login successful: ${response.session!.user.email}");
+        
+        // Wait a moment for the auth state to propagate
+        await Future.delayed(const Duration(milliseconds: 500));
+        
+        // Navigate to main page explicitly or pop back to AuthGate
+        if (mounted) {
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => const MainPage())
+          );
+        }
+        
+      } else {
+        throw Exception("Login failed - no session created");
+      }
     } catch(e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
