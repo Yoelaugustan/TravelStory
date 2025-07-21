@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_story/pages/login_page.dart';
 import 'package:travel_story/pages/main_page.dart';
+import 'package:travel_story/pages/welcome_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -28,7 +28,7 @@ class AuthGate extends StatelessWidget {
           return const MainPage();
         }
         else {
-          return const LoginPage();
+          return const WelcomePage();
         }
       }
     );
