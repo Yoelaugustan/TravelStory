@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_story/auth/auth_service.dart';
 import 'package:travel_story/pages/register_page.dart';
@@ -46,43 +47,160 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 50),
-        children: [
-          // email
-          TextField(
-            controller: _emailController,
-            decoration: const InputDecoration(labelText: "Email"),
-          ),
+      body: Container(
+        color: const Color(0xFF4CB9E7),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 80),
 
-          // Password
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(labelText: "Password"),
-          ),
-
-          const SizedBox(height: 12),
-
-          // button
-          ElevatedButton(
-            onPressed: login, 
-            child: const Text("Login")
-          ),
-
-          const SizedBox(height: 12),
-
-          GestureDetector(
-            onTap: () => Navigator.push(
-              context, 
-              MaterialPageRoute(
-                builder: (context) => const RegisterPage(),
-              )
+            // Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Welcome Back !',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800
+                    ),
+                  ),
+                  Text(
+                    'Login To Continue',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: const Center(child: Text("Don't have an account? Sign Up"))
-          )
-        ],
-      )
+            
+            const SizedBox(height: 60),
+
+            // Form
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 14),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF9F9F9),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
+                ),
+                child: ListView(
+                  children: [
+                    // email
+                    Text(
+                      'Email',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFE3E3E3),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none,
+                        )
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Password
+                    Text(
+                      'Password',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFE3E3E3),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none,
+                        )
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // button
+                    Center(
+                      child: SizedBox(
+                        width: 250,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: login,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF4CB9E7),
+                            foregroundColor: Color(0xFF2E2E2E),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          child: const Text("Login")
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Don't Have an Account? ",
+                          style: const TextStyle(
+                            color: Color(0xFF2E2E2E),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: const TextStyle(
+                                color: Color(0xFF4CB9E7),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(
+                                    builder: (context) => const RegisterPage(),
+                                  )
+                                ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        )
+      ),
     );
   }
 }
