@@ -38,11 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       final response = await authService.signInWithEmailPassword(email, password);
       if (response.session != null) {
         print("Login successful: ${response.session!.user.email}");
-        
-        // Wait a moment for the auth state to propagate
-        await Future.delayed(const Duration(milliseconds: 500));
-        
-        // Navigate to main page explicitly or pop back to AuthGate
+
         if (mounted) {
           Navigator.push(
             context, 
