@@ -96,16 +96,12 @@ class _UserModalState extends State<UserModal> {
 
     try {
       final newUsername = _usernameController.text.trim();
-      final newEmail = _emailController.text.trim();
       final currentUsername = userProfile?['username'];
-      final currentEmail = userProfile?['email'];
 
       String? usernameToUpdate = newUsername != currentUsername ? newUsername : null;
-      String? emailToUpdate = newEmail != currentEmail ? newEmail : null;
 
       await _authService.updateUserProfile(
         username: usernameToUpdate,
-        email: emailToUpdate,
         profileImage: _selectedImage,
       );
 
@@ -289,52 +285,6 @@ class _UserModalState extends State<UserModal> {
                                   }
                                   if (value.trim().length < 3) {
                                     return 'Username must be at least 3 characters';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 25),
-
-                        // Email Field
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 4, bottom: 8),
-                              child: Text(
-                                'Email',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFE0E0E0),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: TextFormField(
-                                controller: _emailController,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 15,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'Email is required';
-                                  }
-                                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value.trim())) {
-                                    return 'Please enter a valid email';
                                   }
                                   return null;
                                 },

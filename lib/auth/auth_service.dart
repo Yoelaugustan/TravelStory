@@ -114,7 +114,6 @@ class AuthService {
   // Update user profile
   Future<void> updateUserProfile({
     String? username,
-    String? email,
     File? profileImage,
   }) async {
     try {
@@ -135,19 +134,6 @@ class AuthService {
           imageFile: profileImage,
         );
         updates['profile_image_url'] = profileImageUrl;
-      }
-
-      // Update email in both auth and database
-      if (email != null) {
-        final authResponse = await _supabase.auth.updateUser(
-          UserAttributes(email: email),
-        );
-        
-        if (authResponse.user != null) {
-          updates['email'] = email;
-        } else {
-          throw Exception('Failed to update email in authentication');
-        }
       }
 
       // Update users table if there are changes
