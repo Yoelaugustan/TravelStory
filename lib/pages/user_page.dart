@@ -67,10 +67,10 @@ class _UserPageState extends State<UserPage> {
     if (imageUrl != null && imageUrl.toString().isNotEmpty) {
       // Use network image
       return CircleAvatar(
-        radius: 60,
+        radius: 80,
         backgroundColor: Colors.grey[300],
         child: CircleAvatar(
-          radius: 58,
+          radius: 78,
           backgroundImage: NetworkImage(imageUrl),
           onBackgroundImageError: (exception, stackTrace) {
             // Will fall back to default asset image below
@@ -81,10 +81,10 @@ class _UserPageState extends State<UserPage> {
     } else {
       // Use default asset image
       return CircleAvatar(
-        radius: 60,
+        radius: 80,
         backgroundColor: Colors.grey[300],
         child: CircleAvatar(
-          radius: 58,
+          radius: 78,
           backgroundImage: const AssetImage('assets/default-avatar.jpg'),
           backgroundColor: Colors.transparent,
         ),

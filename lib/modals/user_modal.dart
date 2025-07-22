@@ -60,8 +60,8 @@ class _UserModalState extends State<UserModal> {
   Future<void> _pickImage() async {
     try {
       final File? image = await ImagePickerService.showImageSourceDialog(context);
+      
       if (image != null) {
-        print('Image selected: ${image.path}'); // Debug log
         setState(() {
           _selectedImage = image;
         });
@@ -76,10 +76,9 @@ class _UserModalState extends State<UserModal> {
           );
         }
       } else {
-        print('No image selected'); // Debug log
+        print('No image returned from picker');
       }
     } catch (e) {
-      print('Error picking image: $e'); // Debug log
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error picking image: $e')),
@@ -134,26 +133,26 @@ class _UserModalState extends State<UserModal> {
   Widget _buildProfileImage() {
     final imageUrl = userProfile?['profile_image_url'];
     
+    // Priority: Selected image > Current profile image > Default image
     if (_selectedImage != null) {
       // Show selected image from gallery/camera
       return Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
+        width: 150,
+        height: 150,
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey[300],
         ),
         child: ClipOval(
           child: Image.file(
             _selectedImage!,
-            width: 100,
-            height: 100,
+            width: 150,
+            height: 150,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
-              return CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.grey[300],
-                backgroundImage: const AssetImage('assets/default-avatar.jpg'),
+              return const CircleAvatar(
+                radius: 80,
+                backgroundColor: Colors.grey,
+                backgroundImage: AssetImage('assets/default-avatar.jpg'),
               );
             },
           ),
@@ -161,28 +160,27 @@ class _UserModalState extends State<UserModal> {
       );
     } else if (imageUrl != null && imageUrl.toString().isNotEmpty) {
       // Show current profile image from network
-      return CircleAvatar(
-        radius: 50,
-        backgroundColor: Colors.grey[300],
+      return Container(
+        width: 150,
+        height: 150,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+        ),
         child: ClipOval(
           child: Image.network(
             imageUrl,
-            width: 100,
-            height: 100,
+            width: 150,
+            height: 150,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
-              return CircularProgressIndicator(
-                color: const Color(0xFF4CB9E7),
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
+              return const CircularProgressIndicator(
+                color: Color(0xFF4CB9E7),
               );
             },
             errorBuilder: (context, error, stackTrace) {
               return const CircleAvatar(
-                radius: 50,
+                radius: 80,
                 backgroundColor: Colors.grey,
                 backgroundImage: AssetImage('assets/default-avatar.jpg'),
               );
@@ -192,10 +190,10 @@ class _UserModalState extends State<UserModal> {
       );
     } else {
       // Show default asset image
-      return CircleAvatar(
-        radius: 50,
-        backgroundColor: Colors.grey[300],
-        backgroundImage: const AssetImage('assets/default-avatar.jpg'),
+      return const CircleAvatar(
+        radius: 80,
+        backgroundColor: Colors.grey,
+        backgroundImage: AssetImage('assets/default-avatar.jpg'),
       );
     }
   }
@@ -233,8 +231,8 @@ class _UserModalState extends State<UserModal> {
                           child: GestureDetector(
                             onTap: _pickImage,
                             child: Container(
-                              width: 32,
-                              height: 32,
+                              width: 40,
+                              height: 40,
                               decoration: BoxDecoration(
                                 color: const Color(0xFF4CB9E7),
                                 shape: BoxShape.circle,
@@ -243,7 +241,7 @@ class _UserModalState extends State<UserModal> {
                               child: const Icon(
                                 Icons.camera_alt,
                                 color: Colors.white,
-                                size: 16,
+                                size: 20,
                               ),
                             ),
                           ),

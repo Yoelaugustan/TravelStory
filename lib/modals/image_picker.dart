@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 // Image Picker Service
 class ImagePickerService {
   static Future<File?> showImageSourceDialog(BuildContext context) async {
-    File? selectedImage;
-
-    await showDialog(
+    return await showDialog<File?>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -19,33 +17,29 @@ class ImagePickerService {
                 leading: const Icon(Icons.photo_library, color: Color(0xFF4CB9E7)),
                 title: const Text('Gallery'),
                 onTap: () async {
-                  Navigator.pop(context);
-                  selectedImage = await _pickImageFromGallery();
+                  final image = await _pickImageFromGallery();
+                  Navigator.pop(context, image);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.camera_alt, color: Color(0xFF4CB9E7)),
                 title: const Text('Camera'),
                 onTap: () async {
-                  Navigator.pop(context);
                   final image = await _pickImageFromCamera();
-                  if (context.mounted) {
-                    Navigator.pop(context, image);
-                  }
+                  Navigator.pop(context, image);
                 },
               ),
             ],
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(context, null),
               child: const Text('Cancel'),
             ),
           ],
         );
       },
     );
-    return selectedImage;
   }
 
   static Future<File?> _pickImageFromGallery() async {
@@ -53,7 +47,9 @@ class ImagePickerService {
       final picker = ImagePicker();
       final XFile? pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 85,
+        maxWidth: 1000,
+        maxHeight: 1000,
+        imageQuality: 90,
       );
 
       if (pickedFile != null) {
@@ -70,7 +66,9 @@ class ImagePickerService {
       final picker = ImagePicker();
       final XFile? pickedFile = await picker.pickImage(
         source: ImageSource.camera,
-        imageQuality: 85,
+        maxWidth: 1000,
+        maxHeight: 1000,
+        imageQuality: 90,
       );
 
       if (pickedFile != null) {
