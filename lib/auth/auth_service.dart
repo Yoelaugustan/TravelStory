@@ -89,13 +89,14 @@ class AuthService {
   }) async {
     try {
       final fileExt = imageFile.path.split('.').last;
-      final fileName = '$userId/profile.$fileExt';
-
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final fileName = '$userId/profile_$timestamp.$fileExt';
+      
       await _supabase.storage.from('profile-images').upload(
         fileName,
         imageFile,
         fileOptions: const FileOptions(
-          cacheControl: '3600',
+          cacheControl: '0',
           upsert: true,
         ),
       );
