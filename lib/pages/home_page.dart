@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel_story/auth/auth_service.dart';
 import 'package:travel_story/pages/most_popular_country_page.dart';
+import 'package:travel_story/pages/shared_intinerary_page.dart';
+import 'package:travel_story/pages/your_work_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -292,12 +294,23 @@ class _HomePageState extends State<HomePage> {
                       color: Color(0xFF2E2E2E),
                     ),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: const Color(0xFF4CB9E7),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to Most Popular Country page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const YourWorksPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        color: const Color(0xFF4CB9E7),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -328,12 +341,23 @@ class _HomePageState extends State<HomePage> {
                       color: Color(0xFF2E2E2E),
                     ),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: const Color(0xFF4CB9E7),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to Most Popular Country page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SharedItineraryPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        color: const Color(0xFF4CB9E7),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
